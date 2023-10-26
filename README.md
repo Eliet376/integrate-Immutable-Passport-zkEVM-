@@ -1,4 +1,4 @@
-# integrate-Immutable-Passport-zkEVM-
+# Integrate-Immutable-Passport-zkEVM-
 A guide that teaches users how to integrate Immutable Passport into their application.
 ### Integrating Immutable Passport into Your Application: A Step-by-Step Guide
 
