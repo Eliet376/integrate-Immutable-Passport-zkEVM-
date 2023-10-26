@@ -1,0 +1,116 @@
+### Sample App: Immutable Passport Integration Demo
+
+#### File Structure:
+```
+immutable-passport-integration-demo
+|-- index.html
+|-- script.js
+|-- package.json
+|-- package-lock.json
+|-- README.md
+```
+
+#### 1. `index.html`:
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immutable Passport Integration Demo</title>
+</head>
+
+<body>
+    <h1>Immutable Passport Integration Demo</h1>
+    <button id="loginBtn">Login</button>
+    <button id="logoutBtn">Logout</button>
+    <button id="transactionBtn">Initiate Transaction</button>
+    <p>User ID Token: <span id="userIdToken"></span></p>
+    <p>Access Token: <span id="accessToken"></span></p>
+    <p>User Nickname: <span id="userNickname"></span></p>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+```
+
+#### 2. `script.js`:
+```javascript
+const { ImmutablePassport } = require('@immutable/passport');
+
+const passport = new ImmutablePassport({
+    clientId: 'YOUR_CLIENT_ID_FROM_DEVELOPER_HUB',
+    redirectUri: 'http://localhost:3000/callback',
+    scopes: ['openid', 'profile'],
+});
+
+document.getElementById('loginBtn').addEventListener('click', async () => {
+    await passport.login();
+    const userIdToken = await passport.getIdToken();
+    const accessToken = await passport.getAccessToken();
+    const userNickname = await passport.getUserInfo().nickname;
+
+    document.getElementById('userIdToken').textContent = userIdToken;
+    document.getElementById('accessToken').textContent = accessToken;
+    document.getElementById('userNickname').textContent = userNickname;
+});
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    passport.logout();
+    document.getElementById('userIdToken').textContent = '';
+    document.getElementById('accessToken').textContent = '';
+    document.getElementById('userNickname').textContent = '';
+});
+
+document.getElementById('transactionBtn').addEventListener('click', async () => {
+    const transactionHash = await passport.initiateTransaction('placeholder string');
+    console.log('Transaction Hash:', transactionHash);
+});
+```
+
+#### 3. `package.json`:
+```json
+{
+    "name": "immutable-passport-integration-demo",
+    "version": "1.0.0",
+    "description": "Demo app for Immutable Passport integration",
+    "main": "script.js",
+    "scripts": {
+        "start": "node script.js"
+    },
+    "dependencies": {
+        "@immutable/passport": "^1.0.0"
+    }
+}
+```
+
+#### 4. `package-lock.json`: *(Generated automatically when you install packages.)*
+
+#### 5. `README.md`:
+*(This is the Markdown guide explaining the integration process, similar to the one provided in the previous response.)*
+
+#### Instructions for Running the Sample App:
+1. **Clone the Repository:**
+   ```bash
+   git clone <repository-url>
+   ```
+
+2. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Start the Application:**
+   ```bash
+   npm start
+   ```
+
+4. **Open Your Browser:**
+   - Navigate to `http://localhost:3000`.
+   - Click the **Login** button to initiate the Immutable Passport login process.
+   - After logging in, you can see the user information displayed on the webpage.
+   - Click the **Initiate Transaction** button to initiate a transaction and check the transaction hash in the console.
+
+This sample app provides a hands-on demonstration of integrating Immutable Passport into a simple web application. You can further modify and enhance the app based on your specific requirements. Happy coding! 🚀
